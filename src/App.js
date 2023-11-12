@@ -7,6 +7,7 @@ import MovieDetails from './Components/bookseatsinterface/intermediate';
 import { HashRouter,Routes,Route } from 'react-router-dom';
 import BookTickets from './Components/bookseatsinterface/bookingcomponents/booktickets';
 import FAQ from './Components/others/faq';
+import UserProfilePage from './Components/landingpage/utils/profile';
 function App() {
   return (
     <HashRouter>
@@ -18,6 +19,7 @@ function App() {
           <Route path='/moviedetails/:id' element={<MovieDetails />} />
           <Route path='/booktickets/:movie_id' element={<BookTickets />} />
           <Route path='/FAQ' element={<FAQ/>}/>
+          <Route path='/profile/:id' element={<UserProfilePage/>}/>
         </Routes>
       </div>
     </HashRouter>

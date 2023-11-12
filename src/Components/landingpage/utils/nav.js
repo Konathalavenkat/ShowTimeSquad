@@ -8,6 +8,8 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import {Link} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleHalfStroke } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import './style.css';
 function OffcanvasExample() {
   const handlelogout = () => {
     localStorage.setItem('islogged', false);
@@ -25,6 +27,9 @@ function OffcanvasExample() {
     }
     return "bg-dark text-light"
   }
+  const getprofile = () =>{
+    window.location.href="/#/profile/"+localStorage.getItem("id");
+  }
   return (
     <>
       {['sm'].map((expand) => (
@@ -35,7 +40,7 @@ function OffcanvasExample() {
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${expand}`}
               aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
-              placement="end"
+              placement="start"
             >
               <Offcanvas.Header closeButton>
                 <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
@@ -51,15 +56,22 @@ function OffcanvasExample() {
                         
                         aria-label="Search"
                     />
-                    <Button variant="outline-success">Search</Button>
+                    <Button variant="outline-success text-danger">Search</Button>
                     </Form>
                   <Nav.Link onClick={()=>{if(localStorage.getItem("darkmode")==='yes') {localStorage.setItem("darkmode","no");window.location.reload()} else {localStorage.setItem("darkmode","yes");window.location.reload()}}}>
                       <FontAwesomeIcon icon={faCircleHalfStroke} className={`${geticon()}`} style={{height: "20px",borderRadius: "10px"}} />
                   </Nav.Link>
-                  <Nav.Link href="#action2" className={`${getcolor()}`}>Link</Nav.Link>
-                  {localStorage.getItem('islogged')!=='true' ? <Link to="/auth"><button className="btn btn-primary">SignIn/Register</button></Link> : <NavDropdown drop="down" flip id="user" title={localStorage.getItem("username")}>
-                        <NavDropdown.Item><Nav.Link className={`btn btn-outline-warning ${getcolor()}`} onClick={handlelogout}>Logout</Nav.Link></NavDropdown.Item>
-                  </NavDropdown>}
+                  {localStorage.getItem('islogged')!=='true' ? <Link to="/auth"><button className="btn btn-primary">SignIn/Register</button></Link> : 
+                    <>
+                    <div className="d-flex align-items-center px-3" onClick={getprofile} style={{cursor:"pointer"}}>
+                      <FontAwesomeIcon icon={faUser} style={{ fontSize: '20px', borderRadius: '10px', marginRight: '8px' }} className={`${getcolor()}`}/>
+                      <p className={`text-center mb-0 ${getcolor()}`}>{localStorage.getItem('username')}</p>
+                    </div>
+                    <Button className={`btn btn-warning ${getcolor()}`} onClick={handlelogout}>
+                    Logout
+                    </Button>
+                    </>
+                  }
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
